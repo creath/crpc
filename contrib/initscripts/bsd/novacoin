@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: CereiPayCoin
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# CereiPayCoin_enable (bool): Set to NO by default. Set this variable to YES if you want to enable CereiPayCoin service.
+# CereiPayCoin_config (path): Set to /usr/local/etc/CereiPayCoin.conf by default.
+# CereiPayCoin_user:  The user account CereiPayCoin daemon runs as. It uses 'root' user by default.
+# CereiPayCoin_group: The group account CereiPayCoin daemon runs as. It uses 'wheel' group by default.
+# CereiPayCoin_datadir (str): Default to "/var/db/CereiPayCoin". Base data directory.
+
+. /etc/rc.subr
+
+name=CereiPayCoin
+rcvar=CereiPayCoin_enable
+
+: ${CereiPayCoin_enable:=NO}
+: ${CereiPayCoin_config=/usr/local/etc/CereiPayCoin.conf}
+: ${CereiPayCoin_datadir=/var/db/CereiPayCoin}
+: ${CereiPayCoin_user="root"}
+: ${CereiPayCoin_group="wheel"}
+
+required_files=${CereiPayCoin_config}
+command=/usr/local/bin/CereiPayCoind
+CereiPayCoin_chdir=${CereiPayCoin_datadir}
+pidfile="${CereiPayCoin_datadir}/CereiPayCoind.pid"
+stop_cmd=CereiPayCoin_stop
+command_args="-conf=${CereiPayCoin_config} -datadir=${CereiPayCoin_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+CereiPayCoin_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${CereiPayCoin_datadir}
+	[ $? -eq 0 ] && chown -R ${CereiPayCoin_user}:${CereiPayCoin_group} ${CereiPayCoin_datadir}
+}
+
+CereiPayCoin_prestart()
+{
+	if [ ! -d "${CereiPayCoin_datadir}/." ]; then
+		CereiPayCoin_create_datadir || return 1
+	fi
+}
+
+CereiPayCoin_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+CereiPayCoin_stop()
+{
+    CereiPayCoin_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${CereiPayCoin_config} -datadir=${CereiPayCoin_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"

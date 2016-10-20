@@ -1,0 +1,9 @@
+Building CereiPayCoin
+
+See doc/readme-qt.rst for instructions on building CereiPayCoin Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of CereiPayCoin.
+
+See doc/build-*.txt for instructions on building CereiPayCoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of CereiPayCoin.

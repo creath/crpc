@@ -1,0 +1,11 @@
+[Unit]
+Description=CereiPayCoin daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=CereiPayCoin
+ExecStart=/opt/CereiPayCoin/CereiPayCoind
+
+[Install]
+WantedBy=multi-user.target

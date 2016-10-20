@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=CereiPayCoin
+Comment=CereiPayCoin P2P Cryptocurrency
+Comment[ru]=CereiPayCoin, P2P криптовалюта
+Comment[fr]=CereiPayCoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=CereiPayCoin, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/CereiPayCoin-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/CereiPayCoin80.xpm
+MimeType=x-scheme-handler/CereiPayCoin;
+Categories=Office;

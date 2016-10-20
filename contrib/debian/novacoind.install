@@ -1,0 +1,2 @@
+debian/bin/CereiPayCoind usr/bin
+src/CereiPayCoind usr/lib/CereiPayCoin

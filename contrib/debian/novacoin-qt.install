@@ -1,0 +1,5 @@
+CereiPayCoin-qt usr/bin
+share/pixmaps/CereiPayCoin32.xpm usr/share/pixmaps
+share/pixmaps/CereiPayCoin80.xpm usr/share/pixmaps
+debian/CereiPayCoin-qt.desktop usr/share/applications
+debian/CereiPayCoin-qt.protocol usr/share/kde4/services/
